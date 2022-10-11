@@ -1,0 +1,3 @@
+155,Cyndaquil,2
+2,Ivysaur,1
+4,Charmander,1
