@@ -95,10 +95,19 @@ namespace LabNo5Pokedex {
 		
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) 
 	{
+		int contador = 0;
 		String^ NombreDelArchivo = "Lista_Pokemons.txt";
 		StreamReader^ AbrirArchivo = File::OpenText(NombreDelArchivo);
-		String^ LineaLeida = AbrirArchivo->ReadLine();
+		String^ LineaLeida;
+		array<PokemonGuardado^>^ MisPokemons = gcnew array<PokemonGuardado^>(10);
+		array<String^>^ DatosParaEnviar = gcnew array<String^>(3);
 		
+		while ((LineaLeida = AbrirArchivo->ReadLine()) != nullptr)
+		{
+			DatosParaEnviar = LineaLeida->Split(',');
+			MisPokemons[contador] = gcnew PokemonGuardado(DatosParaEnviar[1], Convert::ToInt32(DatosParaEnviar[0]), Convert::ToInt32(DatosParaEnviar[2]));
+			contador++;
+		}
 		
 	}
 	};
