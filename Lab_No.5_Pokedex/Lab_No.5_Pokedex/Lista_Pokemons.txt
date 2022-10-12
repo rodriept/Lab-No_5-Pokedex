@@ -1,3 +1,5 @@
 155,Cyndaquil,2
 2,Ivysaur,1
 4,Charmander,1
+159,Croconaw,2
+7,Squirtle,1
