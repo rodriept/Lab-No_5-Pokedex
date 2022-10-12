@@ -80,11 +80,11 @@ namespace LabNo5Pokedex {
 			// button1
 			// 
 			this->button1->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
-			this->button1->Location = System::Drawing::Point(12, 55);
+			this->button1->Location = System::Drawing::Point(10, 61);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(122, 29);
+			this->button1->Size = System::Drawing::Size(182, 23);
 			this->button1->TabIndex = 0;
-			this->button1->Text = L"leer archivo .txt";
+			this->button1->Text = L"leer lista de pokemons  .txt";
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &Pokedex::button1_Click);
 			// 
@@ -111,6 +111,8 @@ namespace LabNo5Pokedex {
 			// 
 			// BOrdenarGeneracion
 			// 
+			this->BOrdenarGeneracion->Enabled = false;
+			this->BOrdenarGeneracion->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
 			this->BOrdenarGeneracion->Location = System::Drawing::Point(140, 151);
 			this->BOrdenarGeneracion->Name = L"BOrdenarGeneracion";
 			this->BOrdenarGeneracion->Size = System::Drawing::Size(177, 32);
@@ -121,6 +123,8 @@ namespace LabNo5Pokedex {
 			// 
 			// BOrdenarNationalNumber
 			// 
+			this->BOrdenarNationalNumber->Enabled = false;
+			this->BOrdenarNationalNumber->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
 			this->BOrdenarNationalNumber->Location = System::Drawing::Point(140, 189);
 			this->BOrdenarNationalNumber->Name = L"BOrdenarNationalNumber";
 			this->BOrdenarNationalNumber->Size = System::Drawing::Size(217, 33);
@@ -131,6 +135,7 @@ namespace LabNo5Pokedex {
 			// 
 			// CBSeleccionarOrden
 			// 
+			this->CBSeleccionarOrden->Enabled = false;
 			this->CBSeleccionarOrden->FormattingEnabled = true;
 			this->CBSeleccionarOrden->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Selection Sort", L"Quick Sort", L"Shell Sort" });
 			this->CBSeleccionarOrden->Location = System::Drawing::Point(140, 121);
@@ -171,37 +176,60 @@ namespace LabNo5Pokedex {
 		Ordenamiento^ MetodoDeOrdenamiento = gcnew Ordenamiento;
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) 
 	{
-		
 		String^ NombreDelArchivo = "Lista_Pokemons.txt";
 		StreamReader^ AbrirArchivo = File::OpenText(NombreDelArchivo);
+		StreamReader^ ValidarArchivo = File::OpenText(NombreDelArchivo);
 		String^ LineaLeida;
 		array<String^>^ DatosTemporal = gcnew array<String^>(3);
-		
-		while ((LineaLeida = AbrirArchivo->ReadLine()) != nullptr)
+
+		if (ValidarArchivo->ReadToEnd() == nullptr)
 		{
-			int nationalNumber, GeneraciónPokemon;
-			String^ NombrePokemon;
-			DatosTemporal = LineaLeida->Split(',');
-			nationalNumber = Convert::ToInt32(DatosTemporal[0]);
-			NombrePokemon = DatosTemporal[1];
-			GeneraciónPokemon = Convert::ToInt32(DatosTemporal[2]);
-			
-			MisPokemons[contador] = gcnew PokemonGuardado(NombrePokemon,nationalNumber, GeneraciónPokemon);
-			contador++;
+			MessageBox::Show("Ingrese los pokemones al archivo de texto", "Error: Pokemones no encontrados", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+		else
+		{
+			while ((LineaLeida = AbrirArchivo->ReadLine()) != nullptr)
+			{
+				int nationalNumber, GeneraciónPokemon;
+				String^ NombrePokemon;
+				DatosTemporal = LineaLeida->Split(',');
+				nationalNumber = Convert::ToInt32(DatosTemporal[0]);
+				NombrePokemon = DatosTemporal[1];
+				GeneraciónPokemon = Convert::ToInt32(DatosTemporal[2]);
+
+				MisPokemons[contador] = gcnew PokemonGuardado(NombrePokemon, nationalNumber, GeneraciónPokemon);
+				contador++;
+			}
+			this->BOrdenarGeneracion->Enabled = true;
+			this->BOrdenarNationalNumber->Enabled = true;
+			this->CBSeleccionarOrden->Enabled = true;
 		}
 		
-		
-		
+	
 	}
 	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) 
 	{
 		try
 		{
-
+			int opcion = CBSeleccionarOrden->SelectedIndex;
+			switch (opcion)
+			{
+			case 0:
+				MetodoDeOrdenamiento->SelectionSortPorGeneracion(MisPokemons, contador);
+				MessageBox::Show("Los pokemons fueron ordenados correctamente por su Generacion", "Ordenados correctamente", MessageBoxButtons::OK);
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+			default:
+				MessageBox::Show("Ingrese un método de ordenamiento", "ERROR: opcion no ingresada", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				break;
+			}
 		}
 		catch (...)
 		{
-				
+			MessageBox::Show("Ingrese un método de ordenamiento", "ERROR: opcion no ingresada", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 	}
     private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) 
@@ -213,6 +241,7 @@ namespace LabNo5Pokedex {
 			{
 			case 0:
 				MetodoDeOrdenamiento->SelectionSortNationalNumber(MisPokemons,contador);
+				MessageBox::Show("Los pokemons fueron ordenados correctamente por su National Number", "Ordenados correctamente", MessageBoxButtons::OK);
 				break;
 			case 1: 
 				break;
