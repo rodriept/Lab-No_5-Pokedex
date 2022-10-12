@@ -1,5 +1,6 @@
 #pragma once
 #include "PokemonGuardado.h"
+#include "Ordenamiento.h"
 namespace LabNo5Pokedex {
 
 	using namespace System;
@@ -167,6 +168,7 @@ namespace LabNo5Pokedex {
 #pragma endregion
 		int contador = 0;
 		array<PokemonGuardado^>^ MisPokemons = gcnew array<PokemonGuardado^>(100);
+		Ordenamiento^ MetodoDeOrdenamiento = gcnew Ordenamiento;
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) 
 	{
 		
@@ -210,6 +212,7 @@ namespace LabNo5Pokedex {
 			switch (opcion)
 			{
 			case 0:
+				MetodoDeOrdenamiento->SelectionSortNationalNumber(MisPokemons,contador);
 				break;
 			case 1: 
 				break;
