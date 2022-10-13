@@ -29,7 +29,7 @@ public:
 		{
 			for (int j = i + 1; j < size; j++)
 			{
-				if (CompararPorGeneracionSelectionSort(Pokemons[i], Pokemons[j]) > 0)
+				if (CompararPorGeneracion(Pokemons[i], Pokemons[j]) > 0)
 				{
 					PokemonGuardado^ Temporal = Pokemons[i];
 					Pokemons[i] = Pokemons[j];
@@ -38,6 +38,7 @@ public:
 			}
 		}
 	}
+	//Método de ordenamiento Quick Sort Por medio del national Number
 	void QuicksortPorNationalNumber(array<PokemonGuardado^>^ Pokemons, int inf, int sup)
 	{
 		int i = inf - 1;
@@ -75,6 +76,43 @@ public:
 		QuicksortPorNationalNumber(Pokemons, i + 1, sup);
 
 	}
+	void QuicksortPorGeneracion(array<PokemonGuardado^>^ Pokemons, int inf, int sup)
+	{
+		int i = inf - 1;
+		int j = sup;
+		bool bandera = true;
+		PokemonGuardado^ temp;
+
+		if (inf >= sup)
+			return;
+
+		int elem_div = Pokemons[sup]->GeneracionPokemon;
+
+
+		while (bandera)
+		{
+			while (Pokemons[++i]->GeneracionPokemon < elem_div);
+			while ((Pokemons[--j]->GeneracionPokemon > elem_div) && (j > inf));
+
+			if (i < j)
+			{
+				temp = Pokemons[i];
+				Pokemons[i] = Pokemons[j];
+				Pokemons[j] = temp;
+			}
+			else
+			{
+				bandera = false;
+			}
+		}
+
+		temp = Pokemons[i];
+		Pokemons[i] = Pokemons[sup];
+		Pokemons[sup] = temp;
+		QuicksortPorNationalNumber(Pokemons, inf, i - 1);
+		QuicksortPorNationalNumber(Pokemons, i + 1, sup);
+
+	}
 	//Método para comparar por National Number
 	static int CompararNationalNumber(PokemonGuardado^ Pokemon1, PokemonGuardado^ Pokemon2)
 	{
@@ -88,7 +126,7 @@ public:
 		}
 	}
 	//Método para comparar por generación 
-	static int CompararPorGeneracionSelectionSort(PokemonGuardado^ Pokemon1, PokemonGuardado^ Pokemon2)
+	static int CompararPorGeneracion(PokemonGuardado^ Pokemon1, PokemonGuardado^ Pokemon2)
 	{
 		if (Pokemon1->GeneracionPokemon > Pokemon2->GeneracionPokemon)
 		{

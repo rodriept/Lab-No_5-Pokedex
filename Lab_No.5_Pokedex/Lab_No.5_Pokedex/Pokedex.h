@@ -218,6 +218,8 @@ namespace LabNo5Pokedex {
 				MessageBox::Show("Los pokemons fueron ordenados correctamente por su Generacion", "Ordenados correctamente", MessageBoxButtons::OK);
 				break;
 			case 1:
+				MetodoDeOrdenamiento->QuicksortPorGeneracion(MisPokemons, 0, contador - 1);
+				MessageBox::Show("Los pokemons fueron ordenados correctamente por su Generacion", "Ordenados correctamente", MessageBoxButtons::OK);
 				break;
 			case 2:
 				break;
