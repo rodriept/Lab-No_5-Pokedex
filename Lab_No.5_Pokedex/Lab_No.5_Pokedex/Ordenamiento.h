@@ -38,6 +38,44 @@ public:
 			}
 		}
 	}
+	void QuicksortPorNationalNumber(array<PokemonGuardado^>^ Pokemons, int inf, int sup)
+	{
+		int i = inf - 1;
+		int j = sup;
+		bool bandera = true;
+		PokemonGuardado^ temp;
+
+		if (inf >= sup)
+			return;
+
+		int elem_div = Pokemons[sup]->NationalNumber;
+		
+
+		while (bandera)
+		{
+			while (Pokemons[++i]->NationalNumber < elem_div);
+			while ((Pokemons[--j]->NationalNumber > elem_div) && (j > inf));
+
+			if (i < j)
+			{
+				temp = Pokemons[i];
+				Pokemons[i] = Pokemons[j];
+				Pokemons[j] = temp;
+			}
+			else
+			{
+				bandera = false;
+			}
+		}
+
+		temp = Pokemons[i];
+		Pokemons[i] = Pokemons[sup];
+		Pokemons[sup] = temp;
+		QuicksortPorNationalNumber(Pokemons, inf, i - 1);
+		QuicksortPorNationalNumber(Pokemons, i + 1, sup);
+
+	}
+	//Método para comparar por National Number
 	static int CompararNationalNumber(PokemonGuardado^ Pokemon1, PokemonGuardado^ Pokemon2)
 	{
 		if (Pokemon1->NationalNumber > Pokemon2->NationalNumber)
@@ -49,7 +87,7 @@ public:
 			return -1;
 		}
 	}
-
+	//Método para comparar por generación 
 	static int CompararPorGeneracionSelectionSort(PokemonGuardado^ Pokemon1, PokemonGuardado^ Pokemon2)
 	{
 		if (Pokemon1->GeneracionPokemon > Pokemon2->GeneracionPokemon)

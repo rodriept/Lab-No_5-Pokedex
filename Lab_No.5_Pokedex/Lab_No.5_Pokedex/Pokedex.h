@@ -204,7 +204,6 @@ namespace LabNo5Pokedex {
 			this->BOrdenarNationalNumber->Enabled = true;
 			this->CBSeleccionarOrden->Enabled = true;
 		}
-		
 	
 	}
 	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) 
@@ -244,6 +243,8 @@ namespace LabNo5Pokedex {
 				MessageBox::Show("Los pokemons fueron ordenados correctamente por su National Number", "Ordenados correctamente", MessageBoxButtons::OK);
 				break;
 			case 1: 
+				MetodoDeOrdenamiento->QuicksortPorNationalNumber(MisPokemons, 0, contador - 1);
+				MessageBox::Show("Los pokemons fueron ordenados correctamente por su National Number", "Ordenados correctamente", MessageBoxButtons::OK);
 				break;
 			case 2: 
 				break; 
