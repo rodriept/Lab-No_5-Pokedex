@@ -76,6 +76,7 @@ public:
 		QuicksortPorNationalNumber(Pokemons, i + 1, sup);
 
 	}
+	//Método de ordenamiento Quick Sort por medio de su generación
 	void QuicksortPorGeneracion(array<PokemonGuardado^>^ Pokemons, int inf, int sup)
 	{
 		int i = inf - 1;
@@ -113,6 +114,8 @@ public:
 		QuicksortPorNationalNumber(Pokemons, i + 1, sup);
 
 	}
+
+	
 	//Método para comparar por National Number
 	static int CompararNationalNumber(PokemonGuardado^ Pokemon1, PokemonGuardado^ Pokemon2)
 	{
@@ -152,5 +155,6 @@ public:
 			}
 		}
 	}
+
 };
 
